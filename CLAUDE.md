@@ -49,5 +49,6 @@ Andrey: full-stack freelancer and AI student, on Fedora 43 with zsh, VS Code and
 - **Inside the Bash sandbox:**
   - protected names (`.bashrc`, `.mcp.json`, `.claude/hooks`, …) appear as `/dev/null` devices, so `git add -A` fails;
   - `~/.claude` is not writable, so `claude plugin install/uninstall` and nested `claude -p` runs need `dangerouslyDisableSandbox` (the user approves).
+  - `.git/config` and project `.claude/` settings, skills and hooks are write-protected: change git config in an approved unsandboxed run; edit `.claude/` files with the Edit/Write tools.
 - **`claude plugin eval`** needs API credits; the subscription does not cover it.
 - **Exact allow rules only** (`Bash(pytest -q)`, not `Bash(pytest *)`): wildcards let flags like `--basetemp` or paths like `.env` through.

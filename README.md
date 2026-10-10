@@ -64,6 +64,7 @@ None of this is a security boundary on its own. **The real safety net is git**: 
 - User-scope plugins do not load in claude.ai cloud sessions or Cowork; this setup is for local VS Code and CLI.
 - `claude plugin eval` needs API credits, so the `ak:engineering` skill's triggering is unverified (the suite is in `plugins/ak/evals/`).
 - Inside the sandbox, `git add -A` fails on placeholder device files; stage by path (`/ak:commit` does).
+- Git config changes (`git remote add`, `git config`) fail inside the sandbox by design; run them yourself or approve an unsandboxed run.
 
 ## Maintain
 - Tests: `python3 -m unittest discover -s plugins/ak/tests`. Validate: `claude plugin validate plugins/ak --strict` and `claude plugin validate . --strict`.

@@ -11,8 +11,8 @@ allowed-tools: Read(/${CLAUDE_PLUGIN_ROOT}/**)
 The user runs this once at the beginning of a session. You are the only one who talks to the user; agents report to you.
 
 ## Project state (collected before you read this)
-- Directory: !`pwd`
-- STATE.md: !`test -f STATE.md && echo present || echo absent`
+- Directory: !`pwd; true`
+- STATE.md: !`test -f STATE.md && echo present || echo absent; true`
 - Existing setup: !`ls -d CLAUDE.md .claude/settings.json .claude/agents .claude/rules 2>/dev/null; true`
 - Git: !`git status --short --branch 2>/dev/null | head -15; true`
 

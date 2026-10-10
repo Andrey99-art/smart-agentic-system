@@ -10,7 +10,7 @@ allowed-tools: Read(/${CLAUDE_PLUGIN_ROOT}/**)
 STATE.md is the project's memory between sessions: a fresh Claude must be able to resume from it alone. Build it from this conversation and the facts below; do not re-read the repo.
 
 ## Facts (collected before you read this)
-- Now: !`date '+%Y-%m-%d %H:%M'`
+- Now: !`date '+%Y-%m-%d %H:%M'; true`
 - STATE.md lines: !`wc -l STATE.md 2>/dev/null; true`
 - Recent commits: !`git log --oneline -15 2>/dev/null; true`
 - Uncommitted: !`git status --short 2>/dev/null | head -20; true`

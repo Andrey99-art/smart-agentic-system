@@ -12,7 +12,7 @@ argument-hint: "[commit subject]"
 ## 1. Audit main (all must be clean; show each count)
 - Tracked tree is committed: `git status --short` shows no ` M` or `A ` lines (sandbox `??` placeholders don't matter).
 - Secrets: `git grep -nE "AKIA[0-9A-Z]{16}|sk-ant-[A-Za-z0-9_-]{20}|gh[pousr]_[A-Za-z0-9]{36}|xox[abprs]-[A-Za-z0-9-]{10}"` finds nothing.
-- Personal data in files: with `PRIVATE=$(git log -1 --format=%ae main)` (the private author email; never write it into any file), `git grep -n -e "/home/" -e "$PRIVATE" -e "${PRIVATE%@*}"` finds nothing.
+- Personal data in files: with `PRIVATE=$(git log -1 --format=%ae main)` (the private author email; never write it into any file), `git grep -n -e "/home/[A-Za-z0-9]" -e "$PRIVATE" -e "${PRIVATE%@*}"` finds nothing (a real home path has a folder name after `/home/`, so the pattern does not match its own text).
 - Tests and validation pass: `python3 -m unittest discover -s plugins/ak/tests`, `claude plugin validate plugins/ak --strict`, `claude plugin validate . --strict`.
 
 Stop and report if anything fails.

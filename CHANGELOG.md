@@ -1,5 +1,9 @@
 # Changelog
 
+## ak 0.8.1 — 2026-10-10
+- New test `test_skill_injections.py`: every `` !`cmd` `` line must avoid shell variables and loops and end with `true` (from inbox: injection-lint).
+- Three injection lines in `start` and `handoff` now end with `; true`, as the test requires.
+
 ## ak 0.8.0 — 2026-10-10
 - `/ak:feedback`: drafts a redacted feedback issue from the session; the user reviews and submits it. No telemetry, no automatic sending.
 - GitHub issue form `.github/ISSUE_TEMPLATE/feedback.yml`.
