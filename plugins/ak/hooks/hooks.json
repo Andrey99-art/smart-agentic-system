@@ -1,5 +1,5 @@
 {
-  "description": "ak safety and workflow hooks: Bash guard, pre-commit secret scan, one review per change, short session status.",
+  "description": "ak safety and workflow hooks: Bash guard, pre-commit secret scan, one review per change, context-size nudge, short session status.",
   "hooks": {
     "PreToolUse": [
       {
@@ -52,6 +52,18 @@
             "command": "python3",
             "args": ["${CLAUDE_PLUGIN_ROOT}/scripts/review_gate.py", "${CLAUDE_PLUGIN_DATA}"],
             "timeout": 30
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/scripts/context_nudge.py", "${CLAUDE_PLUGIN_DATA}"],
+            "timeout": 10
           }
         ]
       }

@@ -1,6 +1,6 @@
 {
   "name": "ak",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "Always-on core: engineering style, start/handoff commands, reviewer and prompt-engineer agents, safety hooks.",
   "author": {
     "name": "Andrey"

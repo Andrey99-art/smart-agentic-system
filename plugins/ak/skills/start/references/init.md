@@ -2,8 +2,10 @@
 
 Paths below ("Templates", "Role guide", "Stack guides") are the ones listed in SKILL.md.
 
-## 1. Read before asking (no questions yet)
-- Manifests that exist: `pyproject.toml`, `requirements*.txt`, `manage.py`, `package.json`, `Cargo.toml`, `src-tauri/`, `build.gradle(.kts)`, `.cargo/config.toml`; README (first 40 lines); `git log --oneline -5`; `git remote -v`.
+The user has already answered "What do you want to develop?" (SKILL.md first action): that is the **goal**, and often the stack.
+
+## 1. Read (cheap; SKILL.md already lists setup and manifests)
+- Start from the manifests listed there, README (first 40 lines), `git log --oneline -5` and `git remote -v`; open another file named in the detection rules below only when the stack is still unclear. An empty repo needs none of this: go to step 2.
 - Detect the stack:
   - **django**: `manage.py`, or `django` in requirements/pyproject.
   - **android**: `build.gradle(.kts)` with an Android plugin, or `AndroidManifest.xml`.
@@ -14,8 +16,8 @@ Paths below ("Templates", "Role guide", "Stack guides") are the ones listed in S
 
 ## 2. Ask (AskUserQuestion, ≤ 6 questions in total, up to 4 per call)
 Ask only what step 1 could not answer:
-1. **Goal**: what the project is for, 1–2 sentences (skip if the README states it).
-2. **Stack**: only if not detected.
+1. **Goal**: already answered; ask only for missing detail that changes the setup.
+2. **Stack**: only if neither the answer nor the manifests show it.
 3. **Roles** (multi-select): derive roles from this project's work using the Role guide (§1). They are not a fixed list. Propose 2–3 with one-line reasons, recommended first; the user may rename, add or drop any. More than 4 needs a stated reason, because each agent costs a cold-cache spawn.
 4. **Git policy**: remote and branching (feature branches? commit after each accepted step?), only if unclear from `git remote -v`.
 5. **Never automate**: anything beyond the defaults (flashing, deploys, production migrations, …).

@@ -22,10 +22,13 @@ class SessionContextTest(unittest.TestCase):
     def tearDown(self) -> None:
         self.tmp.cleanup()
 
-    def start(self, source: str = "startup", stdin: str | None = None) -> subprocess.CompletedProcess:
+    def start(self, source: str = "startup", stdin: str | None = None,
+              home: Path | None = None) -> subprocess.CompletedProcess:
         payload = json.dumps({"hook_event_name": "SessionStart", "source": source,
                               "cwd": str(self.project)})
         env = {k: v for k, v in os.environ.items() if k != "CLAUDE_PROJECT_DIR"}
+        if home is not None:
+            env["HOME"] = str(home)
         return subprocess.run([sys.executable, str(HOOK)], input=stdin or payload, text=True,
                               capture_output=True, env=env, timeout=30)
 
@@ -73,6 +76,19 @@ class SessionContextTest(unittest.TestCase):
         text = self.context(self.start())
         self.assertIn("Next: deploy", text)
         self.assertNotIn("Branch:", text)
+
+    def test_home_folder_warns_instead_of_status(self) -> None:
+        (self.project / "STATE.md").write_text("Next: deploy\n")
+        result = self.start(home=self.project)
+        self.assertIn("home folder", json.loads(result.stdout)["systemMessage"])
+        text = self.context(result)
+        self.assertIn("Open a project folder", text)
+        self.assertNotIn("Next: deploy", text)
+
+    def test_project_folder_has_no_warning(self) -> None:
+        result = self.start(home=self.project / "elsewhere")
+        self.assertNotIn("systemMessage", json.loads(result.stdout))
+        self.assertIn("/ak:start", self.context(result))
 
     def test_errors_exit_1_without_context(self) -> None:
         for stdin in ("not json", "[]", json.dumps({"source": "startup"})):

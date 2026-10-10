@@ -47,6 +47,7 @@ Andrey: full-stack freelancer and AI student, on Fedora 43 with zsh, VS Code and
 - **Reading plugin files** from a project needs `allowed-tools: Read(/${CLAUDE_PLUGIN_ROOT}/**)`. Subagents cannot read them without a prompt, so paste the text into the delegation instead.
 - **Plugin agents** report `agent_type` as `ak:<name>`; their `memory: user` folder is `~/.claude/agent-memory/ak-<name>/`. `disallowedTools` wins over `memory`, so read-only agents keep Write/Edit and are confined by `agent_write_guard.py`.
 - **Inside the Bash sandbox:**
+  - a session opened in `~` hangs on every command, skill injection lines included (sandbox off: 9 s); always open a project folder;
   - protected names (`.bashrc`, `.mcp.json`, `.claude/hooks`, …) appear as `/dev/null` devices, so `git add -A` fails;
   - `~/.claude` is not writable, so `claude plugin install/uninstall` and nested `claude -p` runs need `dangerouslyDisableSandbox` (the user approves).
   - `.git/config` and project `.claude/` settings, skills and hooks are write-protected: change git config in an approved unsandboxed run; edit `.claude/` files with the Edit/Write tools.

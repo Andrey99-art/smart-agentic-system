@@ -34,7 +34,7 @@ Recommended user settings (`~/.claude/settings.json`). Back up the file first:
 ## Make it yours
 - **Profile:** edit the "Profile" block at the top of `plugins/ak/skills/engineering/SKILL.md` (your languages, explanation style, build and flashing habits).
 - **Stack defaults:** `plugins/ak/skills/start/references/stacks/*.md` (Django defaults to uv) and `plugins/ak/templates/project/stack-allow.json` (commands that run without asking).
-- **Safety and settings:** the sandbox and permission examples above; turn the review gate off for one session with `AK_REVIEW_GATE=off`.
+- **Safety and settings:** the sandbox and permission examples above; turn the review gate off for one session with `AK_REVIEW_GATE=off`; set the context nudge with `AK_CONTEXT_NUDGE=150k` (or `off`).
 - Then run the tests (see Maintain). Your edits load in place after `/reload-plugins`.
 
 ## Per project
@@ -54,7 +54,8 @@ After setup, trust the folder when Claude Code asks, and restart once so the new
 | `agent_write_guard.py` | Read-only agents can write only their own memory folder | Writes through Bash (those prompt under Balanced) |
 | `review_gate.py` | Before finishing, asks for one `ak:code-reviewer` pass per changed file (at most 3 per file per session) | Non-git folders, docs-only changes, the quality of the review |
 | `format_on_edit.py` | Formats edited files with exact allow-listed formatter commands from `.claude/format.json` | Files changed by Bash; formatters not installed |
-| `session_context.py` | Adds ≤ 1,500 chars of project status at session start | Does not start `/ak:start` by itself |
+| `session_context.py` | Adds ≤ 1,500 chars of project status at session start; warns when the session runs in your home folder | Does not start `/ak:start` by itself; other very large folders |
+| `context_nudge.py` | When context passes 200k tokens (again every +100k), Claude's next reply starts with one line: `/ak:handoff`, then `/clear` | Subagent contexts; the first prompt of a session; usage beyond the transcript's last 256 KB |
 | Permission rules | Balanced: edits automatic; `rm`, `mv`, `cp`, `sed`, `git push`, installs, network and most shell commands ask | Rules match text, so `git -C . push` slips past `Bash(git push *)` (the guard catches it) |
 | Bash sandbox | Shell commands write only to the project and temp folders, cannot read secrets, and need approval for each new network domain | Excluded `podman`; Read/Edit/Write tools; MCP servers |
 

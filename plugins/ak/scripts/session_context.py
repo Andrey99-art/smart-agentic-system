@@ -5,10 +5,13 @@ startup / clear / compact -> additionalContext (<= MAX_CHARS): head of STATE.md,
   git branch and uncommitted-file count; or a hint to run /ak:start.
 resume -> nothing (the resumed conversation already holds the context; extra
   text would only cost tokens).
+Home folder -> a visible systemMessage plus the same warning as context instead
+  of the status: the Bash sandbox then spans the whole home tree and every
+  command, /ak:start's injection lines included, can hang (seen 2026-10-10).
 Errors -> exit 1 with a message (SessionStart cannot block; it only adds text).
 
-Does NOT cover: starting /ak:start by itself, and STATE.md content
-quality (that is the handoff skill's job).
+Does NOT cover: starting /ak:start by itself, STATE.md content quality (that
+is the handoff skill's job), and other very large folders opened as a project.
 """
 import json
 import os
@@ -25,6 +28,8 @@ NOT_SET_UP = ("andrey-kit: this project has no STATE.md, so it is not set up yet
               "If the user wants to start work here, suggest running /ak:start once.")
 SET_UP = ("andrey-kit project status (from {state}; the user may run /ak:start "
           "to plan the next step):\n{git}{head}")
+HOME_WARNING = ("ak: this session runs in your home folder. The Bash sandbox then covers your "
+                "whole home tree, so commands (and /ak:start) can hang. Open a project folder instead.")
 
 
 def git_line(project: Path) -> str:
@@ -53,6 +58,25 @@ def build_context(project: Path) -> str:
     return text if len(text) <= MAX_CHARS else text[:MAX_CHARS - 1] + "…"
 
 
+def is_home(project: Path) -> bool:
+    """True when the session runs in the user's home folder, not a project."""
+    try:
+        return project == Path.home().resolve()
+    except RuntimeError:  # no resolvable home directory: nothing to warn about
+        return False
+
+
+def output_for(project: Path) -> dict:
+    """SessionStart hook output: the project status, or the home-folder warning."""
+    if is_home(project):  # home is not a project: warn instead of a status
+        return {"systemMessage": HOME_WARNING, "hookSpecificOutput": {
+            "hookEventName": "SessionStart",
+            "additionalContext": HOME_WARNING + " Tell the user this before anything else.",
+        }}
+    return {"hookSpecificOutput": {"hookEventName": "SessionStart",
+                                   "additionalContext": build_context(project)}}
+
+
 def main() -> int:
     try:
         data = json.load(sys.stdin)
@@ -63,10 +87,7 @@ def main() -> int:
         root = os.environ.get("CLAUDE_PROJECT_DIR") or data.get("cwd")
         if not isinstance(root, str) or not root:
             raise ValueError("no project directory (CLAUDE_PROJECT_DIR or cwd)")
-        print(json.dumps({"hookSpecificOutput": {
-            "hookEventName": "SessionStart",
-            "additionalContext": build_context(Path(root).resolve()),
-        }}))
+        print(json.dumps(output_for(Path(root).resolve())))
         return 0
     except Exception as exc:  # SessionStart cannot block: report and carry on
         print(f"session-context: skipped ({type(exc).__name__}: {exc})", file=sys.stderr)

@@ -1,5 +1,14 @@
 # Changelog
 
+## ak 0.9.0 — 2026-10-10
+- New UserPromptSubmit hook `context_nudge.py`: when the conversation context passes 200k tokens (again every +100k), Claude starts its reply with one line suggesting `/ak:handoff` then `/clear` (also sent as a `systemMessage`). Never blocks the prompt; skips slash commands; ~60 tokens per nudge. Threshold `AK_CONTEXT_NUDGE=<tokens>|off`.
+- Why: transcript analysis showed requests above 250k context were 26% of requests but ~43% of spend.
+
+## ak 0.8.2 — 2026-10-10
+- `/ak:start` asks first: its first action is one question ("What do you want to develop?" or "What do you want to work on?" with the STATE.md Next items), before it reads any reference file. Headless runs: 7 turns / ~30 s before the first question → 1 turn / 5–9 s.
+- "Existing setup" no longer lists sandbox `/dev/null` placeholders (`find … -not -type c`), which had sent the model digging for config that does not exist. New injection lines list manifests and the STATE.md Next items.
+- `session_context.py` warns (visible `systemMessage`, plus context) when the session runs in the home folder: the Bash sandbox then hangs every command, which made `/ak:start` look stuck in VS Code.
+
 ## ak 0.8.1 — 2026-10-10
 - New test `test_skill_injections.py`: every `` !`cmd` `` line must avoid shell variables and loops and end with `true` (from inbox: injection-lint).
 - Three injection lines in `start` and `handoff` now end with `; true`, as the test requires.
