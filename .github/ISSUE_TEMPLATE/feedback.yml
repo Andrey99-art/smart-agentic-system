@@ -1,0 +1,43 @@
+name: Feedback
+description: Tell us what worked, what broke, or what you would improve in the ak plugin.
+title: "[feedback] "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for trying `ak`! Tip: run `/ak:feedback` in Claude Code to draft this from your session.
+        **Privacy:** do not paste secrets, tokens, absolute paths or client code. Describe them instead.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options: ["Something broke", "Worked well", "Idea / improvement", "Retro lesson (proposal)"]
+    validations:
+      required: true
+  - type: input
+    id: command
+    attributes:
+      label: Command or component
+      placeholder: "/ak:start, guard hook, code-reviewer, …"
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: The steps and what you saw. Quote the decisive output line.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed fix (optional)
+      description: "Use the retro format if you have it: Evidence → Root cause → Fix → Verify."
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      placeholder: "ak 0.8.0 · Claude Code 2.1.x · OS"

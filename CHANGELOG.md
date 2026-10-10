@@ -1,5 +1,9 @@
 # Changelog
 
+## ak 0.8.0 — 2026-10-10
+- `/ak:feedback`: drafts a redacted feedback issue from the session; the user reviews and submits it. No telemetry, no automatic sending.
+- GitHub issue form `.github/ISSUE_TEMPLATE/feedback.yml`.
+
 ## ak 0.7.0 — 2026-10-10
 Prepared for publication:
 - Licensed under Apache-2.0.

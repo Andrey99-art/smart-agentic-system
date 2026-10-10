@@ -11,6 +11,7 @@ A personal Claude Code system, built for daily freelance work and shared as-is: 
 /ak:handoff        save STATE.md before leaving
 /ak:retro          turn lessons into fixes; general ones go to docs/inbox/ here
 /ak:learn <topic>  any time: an answer verified against today's live docs
+/ak:feedback       draft a redacted feedback issue for this plugin; you submit it yourself
 ```
 Back within an hour? `claude --continue` reuses the warm cache and is cheaper than a fresh start.
 
@@ -69,6 +70,9 @@ None of this is a security boundary on its own. **The real safety net is git**: 
 - Proposals from projects land in `docs/inbox/`; process them with `/inbox` in this repo.
 - Releases: bump `version` in `plugins/ak/.claude-plugin/plugin.json` and add a `CHANGELOG.md` entry.
 - Design and history: `docs/architecture.md`, `docs/decisions.md`, `docs/notes/`.
+
+## Feedback
+Run `/ak:feedback` in Claude Code. It drafts an issue from your session, redacts secrets, paths and project names, and gives you the link to the [feedback form](https://github.com/Andrey99-art/smart-agentic-system/issues/new?template=feedback.yml). Nothing is sent automatically: you review the draft and submit it yourself. The plugin collects no usage data.
 
 ## License
 Apache-2.0, see [LICENSE](LICENSE). You may use, modify and share it with attribution. The license includes a patent grant from contributors.
