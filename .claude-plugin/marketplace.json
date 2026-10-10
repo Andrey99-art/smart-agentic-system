@@ -1,0 +1,16 @@
+{
+  "name": "andrey-kit",
+  "owner": {
+    "name": "Andrey"
+  },
+  "metadata": {
+    "description": "Andrey's personal Claude Code system: core safety and workflow, plus per-stack plugins."
+  },
+  "plugins": [
+    {
+      "name": "ak",
+      "source": "./plugins/ak",
+      "description": "Always-on core: engineering style, start/handoff commands, reviewer and prompt-engineer agents, safety hooks."
+    }
+  ]
+}

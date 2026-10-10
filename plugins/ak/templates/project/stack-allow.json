@@ -1,0 +1,35 @@
+{
+  "_about": "Per-stack Bash checks that run without asking; init merges the matching list into permissions.allow. Exact commands only, no '*': flags and paths of lint/test tools can write files or print secrets (e.g. 'ruff check .env'). Test runners still execute project code; the real boundary is the sandbox (Phase 6).",
+  "django": [
+    "Bash(ruff check)",
+    "Bash(ruff check .)",
+    "Bash(pytest)",
+    "Bash(pytest -q)",
+    "Bash(python manage.py check)",
+    "Bash(python manage.py makemigrations --check --dry-run)",
+    "Bash(uv run ruff check)",
+    "Bash(uv run ruff check .)",
+    "Bash(uv run pytest)",
+    "Bash(uv run pytest -q)",
+    "Bash(uv run python manage.py check)",
+    "Bash(uv run python manage.py makemigrations --check --dry-run)"
+  ],
+  "android": [],
+  "_android": "Empty on purpose: by default Android builds run in Android Studio (see the engineering skill Profile), so there are no CLI Gradle builds.",
+  "tauri": [
+    "Bash(cargo check)",
+    "Bash(cargo clippy)",
+    "Bash(cargo test)",
+    "Bash(cargo fmt --check)",
+    "Bash(npm run lint)",
+    "Bash(npx tsc --noEmit)"
+  ],
+  "esp32": [
+    "Bash(cargo check)",
+    "Bash(cargo clippy)",
+    "Bash(cargo fmt --check)",
+    "Bash(cargo build)",
+    "Bash(cargo build --release)"
+  ],
+  "_esp32": "No cargo run: with an espflash runner it flashes the board, so the guard asks."
+}

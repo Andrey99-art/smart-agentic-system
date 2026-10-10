@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Bash(python3 -m unittest discover -s plugins/ak/tests)",
+      "Bash(python3 -m unittest discover -s plugins/ak/tests -v)",
+      "Bash(claude plugin validate plugins/ak --strict)",
+      "Bash(claude plugin validate . --strict)"
+    ],
+    "ask": [
+      "Bash(rm *)",
+      "Bash(rmdir *)",
+      "Bash(mv *)",
+      "Bash(cp *)",
+      "Bash(sed *)",
+      "Bash(git push *)"
+    ],
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)"
+    ]
+  }
+}

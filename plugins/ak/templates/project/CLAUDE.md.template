@@ -1,0 +1,30 @@
+# <Project name>
+
+<!-- Skeleton filled by ak:prompt-engineer. Keep under 100 lines: every line loads into every session and every agent. HTML comments like this one are stripped before Claude reads the file. -->
+
+## Goal
+<1–2 sentences: what the project is for and for whom>
+
+## Stack
+- <language / framework / key libraries, versions from the manifests>
+
+## Commands
+<!-- Only commands confirmed in manifests or scripts; otherwise TODO(owner). -->
+- Run: `<command>`
+- Test: `<command>`
+- Lint / check: `<command>`
+
+## Layout
+- `<dir>/`: <what lives there>
+
+## Must-know rules
+<!-- Only project facts Claude would get wrong without this line. No general advice. -->
+- <rule>
+
+## Agents
+- `<role>`: <when to delegate>
+- Code review: `ak:code-reviewer` runs automatically after code changes.
+
+## Workflow
+- Start each session with `/ak:start`; before leaving, run `/ak:handoff`.
+- Engineering style comes from the `ak:engineering` skill; do not restate it here.

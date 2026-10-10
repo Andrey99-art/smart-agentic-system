@@ -1,0 +1,29 @@
+# andrey-kit: secrets and machine-local Claude files (always)
+.env
+.env.*
+!.env.example
+CLAUDE.local.md
+.claude/settings.local.json
+.claude/agent-memory-local/
+# .claude/agent-memory/ (project agent notes) is committed on purpose.
+
+# stack: django
+__pycache__/
+*.py[cod]
+db.sqlite3
+media/
+
+# stack: tauri
+target/
+node_modules/
+dist/
+
+# stack: esp32
+target/
+
+# stack: android
+.gradle/
+build/
+local.properties
+*.iml
+captures/

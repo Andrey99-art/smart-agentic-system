@@ -1,0 +1,21 @@
+# Secrets: never commit
+.env
+.env.*
+*.pem
+*.key
+*.jks
+*.keystore
+local.properties
+
+# Claude Code local-only files
+.claude/settings.local.json
+CLAUDE.local.md
+
+# Removal staging area (Agent_Safety: move here instead of deleting)
+_to_delete/
+
+# Python / tooling noise
+__pycache__/
+*.pyc
+.venv/
+*.log
